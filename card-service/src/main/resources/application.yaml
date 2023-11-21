@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:mariadb://localhost:3307/card
+    username: root
+    password: password
+    driver-class-name: org.mariadb.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+crypto:
+  encryptionKey: R5q@Es#W6p!2FzG&
+
+server:
+  port: 8083
+
