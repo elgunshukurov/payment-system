@@ -3,7 +3,7 @@ version: '3.3'
 services:
   postgres:
     image: postgres
-    container_name: postgres_container
+    container_name: product_db
     restart: unless-stopped
     ports:
       - "5432:5432"

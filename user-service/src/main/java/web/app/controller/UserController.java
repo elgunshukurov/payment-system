@@ -11,7 +11,10 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
-import web.app.domain.User;
+import org.springframework.web.bind.annotation.*;
+import web.app.dto.auth.AccessTokenDto;
+import web.app.dto.auth.LoginDto;
+import web.app.dto.auth.SignUpDto;
 import web.app.dto.request.CardRequest;
 import web.app.dto.request.PaymentRequest;
 import web.app.dto.request.ProductRequest;
@@ -19,15 +22,15 @@ import web.app.dto.request.TransactionRequest;
 import web.app.dto.users.UserDto;
 import web.app.repository.UserRepository;
 import web.app.security.auth.services.JwtService;
-import web.app.service.*;
-import web.app.dto.auth.AccessTokenDto;
-import web.app.dto.auth.LoginDto;
-import web.app.dto.auth.SignUpDto;
-import org.springframework.web.bind.annotation.*;
+import web.app.service.CardServiceClient;
+import web.app.service.ProductServiceClient;
+import web.app.service.TransactionServiceClient;
+import web.app.service.UserService;
 import web.app.util.exception.UserNotFoundException;
 
 import javax.validation.Valid;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -124,6 +127,7 @@ public class UserController {
                     transaction.setUserId(userId);
                     transaction.setDescription("Payment for product ID: " + paymentRequest.getProductId());
                     transaction.setAmount(paymentRequest.getAmount());
+                    transaction.setTimestamp(LocalDateTime.now());
 
                     transactionServiceClient.addTransaction(transaction);
 

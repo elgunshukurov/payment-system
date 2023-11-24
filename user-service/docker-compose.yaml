@@ -3,6 +3,7 @@ services:
   db:
     hostname: mysql
     image: mysql:5.7
+    container_name: user_db
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: 'password'
