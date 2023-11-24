@@ -1,6 +1,6 @@
 ## Microservices-Based Payment System
 
-This project entails the development of a microservices-based system consisting of four core microservices: User, Card, Payment, and Product. Each service is designed to serve specific functions, facilitating user authentication, card management, payments, and product information retrieval.
+This project entails the development of a microservices-based system consisting of four core microservices: User, Card, Transaction, and Product. Each service is designed to serve specific functions, facilitating user authentication, card management, payments, and product information retrieval.
 
 ### Microservices Overview:
 
@@ -16,9 +16,9 @@ This project entails the development of a microservices-based system consisting 
 - **Card Storage:** Stores card details, including encrypted card numbers, expiration dates, encrypted CVVs, balances, and associated user information.
 - **Multiple Cards:** Supports users having multiple cards.
 
-#### Payment Service
+#### Transaction Service
 
-- **Payment History:** Stores user information, card details, product information, and timestamps related to payments.
+- **Transaction History:** Stores user information, card details, product information, and timestamps related to payments.
 
 #### Product Service
 
@@ -53,9 +53,9 @@ To successfully run this microservices-based system, follow these steps:
 2. **Run Microservices:**
 
     - **User Service:** Run the User Service application from its Application class. It typically runs on port 8080.
-    - **Card Service:** Start the Card Service application from its Application class. Usually operates on port 8081.
-    - **Payment Service:** Run the Payment Service application using its Application class. Often runs on port 8082.
-    - **Product Service:** Start the Product Service application from its Application class. Generally operates on port 8083.
+    - **Transaction Service:** Run the Transaction Service application using its Application class. Often runs on port 8081.
+    - **Product Service:** Start the Product Service application from its Application class. Generally operates on port 8082.
+    - **Card Service:** Start the Card Service application from its Application class. Usually operates on port 8083.
 
 Ensure to run each microservice individually on its respective port, ensuring they start without any issues.
 
@@ -65,7 +65,7 @@ Ensure to run each microservice individually on its respective port, ensuring th
 
 ## Technology Stack
 
-### Tech Stack (User Service)
+## Tech Stack (User Service)
 
 #### Spring Boot Dependencies:
 
@@ -112,7 +112,7 @@ Ensure to run each microservice individually on its respective port, ensuring th
 - `lombok` reduces Java code verbosity by generating boilerplate code.
 
 
-### Tech Stack (Product Service)
+## Tech Stack (Transaction Service)
 
 The Transactions Service leverages the following additional dependency:
 
