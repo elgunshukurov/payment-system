@@ -26,9 +26,9 @@ public class JwtAuthRequestFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws IOException, ServletException {
         log.trace("Filtering request against auth services {}", authServices);
         Optional<Authentication> authOptional = Optional.empty();
-//        for (AuthService authService : authServices) {
-//            authOptional = authOptional.or(() -> authService.getAuthentication(httpServletRequest));
-//        }
+        for (AuthService authService : authServices) {
+            authOptional = authOptional.or(() -> authService.getAuthentication(httpServletRequest));
+        }
         authOptional.ifPresent(auth -> SecurityContextHolder.getContext().setAuthentication(auth));
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }

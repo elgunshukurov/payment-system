@@ -27,8 +27,8 @@ public class SecurityConfiguration extends BaseSecurityConfig {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/api/users/sign-in",
-                        "/api/users/**"
+                .antMatchers("/api/users/sign-in"
+//                        ,"/api/users/**"
                 )
                 .permitAll()
                 .and()

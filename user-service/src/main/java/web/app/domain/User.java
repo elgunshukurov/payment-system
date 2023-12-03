@@ -50,15 +50,8 @@ public class User implements UserDetails {
     @Column(updatable = false)
     private LocalDateTime creationDate;
 
-    @JsonIgnore
-    @ManyToMany
-//    @JoinTable(
-//            name = "user_authorities",
-//            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-//            inverseJoinColumns = {@JoinColumn(name = "authority_id", referencedColumnName = "id")})
-    @BatchSize(size = 20)
-    @Builder.Default
-    private Set<Authority> authorities = new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Authority> authorities;
 
     @PrePersist
     public void prePersist() {

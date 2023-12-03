@@ -1,5 +1,6 @@
 package web.app.controller;
 
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -148,6 +149,17 @@ public class UserController {
     @GetMapping("all")
     public List<UserDto> getUserList(){
         return userService.getUserList();
+    }
+
+    @PatchMapping("/roles")
+    public void addRoles(@RequestBody AddAuthorityRequest request) {
+        userService.addAuthorityToUser(request.getUsername(), request.getAuthority());
+    }
+
+    @Data
+    class AddAuthorityRequest {
+        private String username;
+        private String authority;
     }
 
 }
