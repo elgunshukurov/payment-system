@@ -14,8 +14,6 @@ import javax.validation.constraints.NotNull;
 @ToString(exclude = "password")
 public class SignUpDto {
 
-//    @NotNull
-//    private Boolean agreements;
 
     @NotBlank
     private String name;

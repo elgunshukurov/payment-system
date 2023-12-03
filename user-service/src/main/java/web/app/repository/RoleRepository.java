@@ -2,13 +2,13 @@ package web.app.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import web.app.domain.Authority;
+import web.app.domain.Role;
 
 import java.util.Optional;
 
 @Repository
-public interface AuthorityRepository extends JpaRepository<Authority, Long> {
+public interface RoleRepository extends JpaRepository<Role, Long> {
 
-    Optional<Authority> findByAuthority(String authority);
+    Optional<Role> findByName(String name);
 
 }

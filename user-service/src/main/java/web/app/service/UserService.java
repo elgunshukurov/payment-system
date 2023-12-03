@@ -1,7 +1,6 @@
 package web.app.service;
 
-import web.app.domain.Authority;
-import web.app.domain.User;
+import web.app.domain.Role;
 import web.app.dto.auth.SignUpDto;
 import web.app.dto.users.UserDto;
 
@@ -13,6 +12,6 @@ public interface UserService {
 
     List<UserDto> getUserList();
 
-    Authority save(Authority role);
+    Role save(Role role);
     void addAuthorityToUser(String username, String authority);
 }
