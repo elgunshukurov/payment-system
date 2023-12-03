@@ -2,19 +2,10 @@ package web.app.controller;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import web.app.dto.auth.AccessTokenDto;
-import web.app.dto.auth.LoginDto;
 import web.app.dto.auth.SignUpDto;
 import web.app.dto.request.CardRequest;
 import web.app.dto.request.PaymentRequest;
@@ -22,14 +13,11 @@ import web.app.dto.request.ProductRequest;
 import web.app.dto.request.TransactionRequest;
 import web.app.dto.users.UserDto;
 import web.app.repository.UserRepository;
-import web.app.security.auth.services.JwtService;
 import web.app.service.CardServiceClient;
 import web.app.service.ProductServiceClient;
 import web.app.service.TransactionServiceClient;
 import web.app.service.UserService;
-import web.app.util.exception.UserNotFoundException;
 
-import javax.validation.Valid;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -44,8 +32,6 @@ public class UserController {
     private static final Duration ONE_WEEK = Duration.ofDays(7);
 
     private final UserRepository userRepository;
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    private final JwtService jwtService;
     private final UserService userService;
     private final CardServiceClient cardServiceClient;
     private final ProductServiceClient productServiceClient;
@@ -56,26 +42,26 @@ public class UserController {
         return "Test method";
     }
 
-    @SneakyThrows
-    @PostMapping("/sign-in")
-    public ResponseEntity<AccessTokenDto> authorize(@Valid @RequestBody LoginDto loginDto) {
-        log.info("Login request by user {}", loginDto.getEmail());
-        userRepository.findByUsername(loginDto.getEmail())
-                .orElseThrow(UserNotFoundException::new);
-
-        log.info("Authenticating user {}", loginDto.getEmail());
-        Authentication authenticationToken = new UsernamePasswordAuthenticationToken(loginDto.getEmail(),
-                loginDto.getPassword());
-
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        Duration duration = getDuration(loginDto.getRememberMe());
-        String jwt = jwtService.issueToken(authentication, duration);
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(HttpHeaders.AUTHORIZATION, "Bearer " + jwt);
-        return new ResponseEntity<>(new AccessTokenDto(jwt), httpHeaders, HttpStatus.OK);
-    }
+//    @SneakyThrows
+//    @PostMapping("/sign-in")
+//    public ResponseEntity<AccessTokenDto> authorize(@Valid @RequestBody LoginDto loginDto) {
+//        log.info("Login request by user {}", loginDto.getEmail());
+//        userRepository.findByUsername(loginDto.getEmail())
+//                .orElseThrow(UserNotFoundException::new);
+//
+//        log.info("Authenticating user {}", loginDto.getEmail());
+//        Authentication authenticationToken = new UsernamePasswordAuthenticationToken(loginDto.getEmail(),
+//                loginDto.getPassword());
+//
+//        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+//
+//        Duration duration = getDuration(loginDto.getRememberMe());
+//        String jwt = jwtService.issueToken(authentication, duration);
+//        HttpHeaders httpHeaders = new HttpHeaders();
+//        httpHeaders.add(HttpHeaders.AUTHORIZATION, "Bearer " + jwt);
+//        return new ResponseEntity<>(new AccessTokenDto(jwt), httpHeaders, HttpStatus.OK);
+//    }
 
     @PostMapping("/sign-up")
     public ResponseEntity<Void> signUp(@RequestBody @Validated SignUpDto dto) {
