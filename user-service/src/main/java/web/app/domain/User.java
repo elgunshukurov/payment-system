@@ -47,7 +47,7 @@ public class User {
     @Column(updatable = false)
     private LocalDateTime creationDate;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
     @PrePersist
