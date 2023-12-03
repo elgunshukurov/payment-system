@@ -14,11 +14,13 @@ import web.app.repository.RoleRepository;
 import web.app.repository.UserRepository;
 import web.app.service.UserService;
 import web.app.util.exception.AuthorityAlreadyUsedException;
+import web.app.util.exception.RoleNotFoundException;
+import web.app.util.exception.UserNotFoundException;
 import web.app.util.exception.errors.EmailAlreadyUsedException;
 import web.app.util.mapper.UserMapper;
 
-import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -57,12 +59,24 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 
     @Override
-    @Transactional
     public void addAuthorityToUser(String username, String roleName) {
-        User user = userRepository.findByUsername(username).get();
-        Role role = roleRepository.findByName(roleName).get();
+        Optional<User> optionalUser = userRepository.findByUsername(username);
+        Optional<Role> optionalRole = roleRepository.findByName(roleName);
 
-        user.getRoles().add(role);
+        if (optionalUser.isPresent() && optionalRole.isPresent()) {
+            User user = optionalUser.get();
+            Role role = optionalRole.get();
+
+            user.getRoles().add(role);
+            userRepository.save(user);
+        } else {
+            if (optionalUser.isEmpty()) {
+                throw new UserNotFoundException(username);
+            }
+            if (optionalRole.isEmpty()) {
+                throw new RoleNotFoundException(roleName);
+            }
+        }
     }
 
 

@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import web.app.dto.auth.AuthorityDto;
+import web.app.dto.RoleDto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -23,7 +23,7 @@ public class UserDto {
     @NotNull
     private String username;
     private String name;
-    private Set<AuthorityDto> authorities;
+    private Set<RoleDto> roles;
     private Boolean enabled;
     private Boolean accountNonExpired;
     private Boolean accountNonLocked;

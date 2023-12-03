@@ -4,12 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import web.app.domain.Authority;
+import web.app.domain.Role;
 import web.app.domain.User;
-import web.app.dto.auth.AuthorityDto;
+import web.app.dto.RoleDto;
 import web.app.dto.auth.SignUpDto;
 import web.app.dto.users.UserDto;
-import web.app.dto.users.UserInfoDto;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -22,10 +21,10 @@ public class CustomUserMapperImpl implements UserMapper{
     private final PasswordEncoder passwordEncoder;
     @Override
     public UserDto entityToDto(User user) {
-        Set<Authority> authorities = user.getAuthorities();
+        Set<Role> roles = user.getRoles();
 
         UserDto userDto = new UserDto();
-        userDto.setAuthorities(authorities.stream().map(this::authorityToAuthorityDto).collect(Collectors.toSet()));
+        userDto.setRoles(roles.stream().map(this::roleToRoleDto).collect(Collectors.toSet()));
         userDto.setEnabled(user.isEnabled());
         userDto.setAccountNonExpired(user.isAccountNonExpired());
         userDto.setAccountNonLocked(user.isAccountNonLocked());
@@ -36,12 +35,11 @@ public class CustomUserMapperImpl implements UserMapper{
         return userDto;
     }
 
-    public AuthorityDto authorityToAuthorityDto(Authority authority) {
-        AuthorityDto authorityDto = new AuthorityDto();
-        authorityDto.setAuthority(authority.getAuthority());
-        authorityDto.setId(authority.getId());
-//        authorityDto.setTitle(authority.ge);
-        return authorityDto;
+    public RoleDto roleToRoleDto(Role role) {
+        RoleDto roleDto = new RoleDto();
+        roleDto.setName(role.getName());
+        roleDto.setId(role.getId());
+        return roleDto;
     }
 
 
@@ -49,8 +47,13 @@ public class CustomUserMapperImpl implements UserMapper{
     @Override
     public User dtoToEntity(SignUpDto dto) {
 
+//        Set<Role> roleSet = new HashSet<>();
+//        Role role = new Role();
+//        role.setName(ROLE_USER.getValue());
+//        roleSet.add(role);
+
         User user = new User();
-//        user.setAuthorities(authorities.stream().map(this::authorityToAuthorityDto).collect(Collectors.toSet()));
+//        user.setRoles(roleSet);
         user.setEnabled(true);
         user.setAccountNonExpired(true);
         user.setAccountNonLocked(true);
